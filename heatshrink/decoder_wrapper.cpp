@@ -25,11 +25,11 @@ namespace heatshrink {
 		}
 	}
 
-	void HeatShrinkDecoder::reset() {
+	void HeatShrinkDecoder::Reset() {
 		heatshrink_decoder_reset(m_decoder);
 	}
 
-	DecoderSinkResult HeatShrinkDecoder::sink(array<Byte>^ buffer, UInt64 offset, UInt64 size, UInt64% inputSize) {
+	DecoderSinkResult HeatShrinkDecoder::Sink(array<Byte>^ buffer, UInt64 offset, UInt64 size, UInt64% inputSize) {
 		pin_ptr<Byte> pinnedBuffer = &buffer[0];
 		uint8_t* bufferPtr = pinnedBuffer;
 
@@ -39,7 +39,7 @@ namespace heatshrink {
 		return static_cast<DecoderSinkResult>(ret);
 	}
 
-	DecoderPollResult HeatShrinkDecoder::poll(array<Byte>^ buffer, UInt64 offset, UInt64 size, UInt64% outputSize) {
+	DecoderPollResult HeatShrinkDecoder::Poll(array<Byte>^ buffer, UInt64 offset, UInt64 size, UInt64% outputSize) {
 		pin_ptr<Byte> pinnedBuffer = &buffer[0];
 		uint8_t* bufferPtr = pinnedBuffer;
 
@@ -49,7 +49,7 @@ namespace heatshrink {
 		return static_cast<DecoderPollResult>(ret);
 	}
 
-	DecoderFinishResult HeatShrinkDecoder::finish() {
+	DecoderFinishResult HeatShrinkDecoder::Finish() {
 		return static_cast<DecoderFinishResult>(heatshrink_decoder_finish(m_decoder));
 	}
 }
