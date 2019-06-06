@@ -191,7 +191,7 @@ namespace heatshrink {
 		/// <param name="buffer">The buffer to be filled into the decoder</param>
 		/// <param name="inputSize">Number of bytes actually sunk</param>
 		/// <returns>Refer to HSE_sink_res in original C version heatshrink</returns>
-		DecoderSinkResult Sink(array<Byte>^ buffer, UInt64% inputSize) {
+		DecoderSinkResult Sink(array<Byte>^ buffer, [Out] UInt64% inputSize) {
 			return Sink(buffer, 0, buffer->Length, inputSize);
 		}
 
