@@ -1,6 +1,7 @@
 #pragma once
 
 using namespace System;
+using namespace System::Runtime::InteropServices;
 
 namespace heatshrink {
 	public enum class EncoderSinkResult {
@@ -48,7 +49,30 @@ namespace heatshrink {
 		/// <param name="size">Number of bytes to be filled</param>
 		/// <param name="inputSize">Number of bytes actually sunk</param>
 		/// <returns>Refer to HSE_sink_res in original C version heatshrink</returns>
-		EncoderSinkResult Sink(array<Byte>^ buffer, UInt64 offset, UInt64 size, UInt64% inputSize);
+		EncoderSinkResult Sink(array<Byte>^ buffer, UInt64 offset, UInt64 size, [Out] UInt64% inputSize);
+
+		/// <summary>
+		/// Sink up to size bytes from buffer into the encoder.
+		/// inputSize is set to the number of bytes actually sunk (in case a buffer was filled)
+		/// </summary>
+		/// <param name="buffer">The buffer to be filled into the encoder</param>
+		/// <param name="size">Number of bytes to be filled</param>
+		/// <param name="inputSize">Number of bytes actually sunk</param>
+		/// <returns>Refer to HSE_sink_res in original C version heatshrink</returns>
+		EncoderSinkResult Sink(array<Byte>^ buffer, UInt64 size, [Out] UInt64% inputSize) {
+			return Sink(buffer, 0, size, inputSize);
+		}
+
+		/// <summary>
+		/// Sink the whole buffer into the encoder.
+		/// inputSize is set to the number of bytes actually sunk (in case a buffer was filled)
+		/// </summary>
+		/// <param name="buffer">The buffer to be filled into the encoder</param>
+		/// <param name="inputSize">Number of bytes actually sunk</param>
+		/// <returns>Refer to HSE_sink_res in original C version heatshrink</returns>
+		EncoderSinkResult Sink(array<Byte>^ buffer, [Out] UInt64% inputSize) {
+			return Sink(buffer, 0, buffer->Length, inputSize);
+		}
 
 		/// <summary>
 		/// Poll for output from the encoder, copying at most size bytes into buffer + offset
@@ -59,7 +83,30 @@ namespace heatshrink {
 		/// <param name="size">Number of bytes to be filled</param>
 		/// <param name="outputSize">Number of bytes actually polled</param>
 		/// <returns>Refer to HSE_poll_res in original C version heatshrink</returns>
-		EncoderPollResult Poll(array<Byte>^ buffer, UInt64 offset, UInt64 size, UInt64% outputSize);
+		EncoderPollResult Poll(array<Byte>^ buffer, UInt64 offset, UInt64 size, [Out] UInt64% outputSize);
+
+		/// <summary>
+		/// Poll for output from the encoder, copying at most size bytes into buffer
+		/// (setting outputSize to the actual amount copied)
+		/// </summary>
+		/// <param name="buffer">The buffer to be filled from the encoder</param>
+		/// <param name="size">Number of bytes to be filled</param>
+		/// <param name="outputSize">Number of bytes actually polled</param>
+		/// <returns>Refer to HSE_poll_res in original C version heatshrink</returns>
+		EncoderPollResult Poll(array<Byte>^ buffer, UInt64 size, [Out] UInt64% outputSize) {
+			return Poll(buffer, 0, size, outputSize);
+		}
+
+		/// <summary>
+		/// Poll for output from the encoder, copying up to buffer's length bytes into buffer
+		/// (setting outputSize to the actual amount copied)
+		/// </summary>
+		/// <param name="buffer">The buffer to be filled from the encoder</param>
+		/// <param name="outputSize">Number of bytes actually polled</param>
+		/// <returns>Refer to HSE_poll_res in original C version heatshrink</returns>
+		EncoderPollResult Poll(array<Byte>^ buffer, [Out] UInt64% outputSize) {
+			return Poll(buffer, 0, buffer->Length, outputSize);
+		}
 		
 		/// <summary>
 		/// Notify the encoder that the input stream is finished.
@@ -123,7 +170,30 @@ namespace heatshrink {
 		/// <param name="size">Number of bytes to be filled</param>
 		/// <param name="inputSize">Number of bytes actually sunk</param>
 		/// <returns>Refer to HSE_sink_res in original C version heatshrink</returns>
-		DecoderSinkResult Sink(array<Byte>^ buffer, UInt64 offset, UInt64 size, UInt64% inputSize);
+		DecoderSinkResult Sink(array<Byte>^ buffer, UInt64 offset, UInt64 size, [Out] UInt64% inputSize);
+
+		/// <summary>
+		/// Sink up to size bytes from buffer into the decoder.
+		/// inputSize is set to the number of bytes actually sunk (in case a buffer was filled)
+		/// </summary>
+		/// <param name="buffer">The buffer to be filled into the decoder</param>
+		/// <param name="size">Number of bytes to be filled</param>
+		/// <param name="inputSize">Number of bytes actually sunk</param>
+		/// <returns>Refer to HSE_sink_res in original C version heatshrink</returns>
+		DecoderSinkResult Sink(array<Byte>^ buffer, UInt64 size, [Out] UInt64% inputSize) {
+			return Sink(buffer, 0, size, inputSize);
+		}
+
+		/// <summary>
+		/// Sink the whole buffer into the decoder.
+		/// inputSize is set to the number of bytes actually sunk (in case a buffer was filled)
+		/// </summary>
+		/// <param name="buffer">The buffer to be filled into the decoder</param>
+		/// <param name="inputSize">Number of bytes actually sunk</param>
+		/// <returns>Refer to HSE_sink_res in original C version heatshrink</returns>
+		DecoderSinkResult Sink(array<Byte>^ buffer, UInt64% inputSize) {
+			return Sink(buffer, 0, buffer->Length, inputSize);
+		}
 
 		/// <summary>
 		/// Poll for output from the decoder, copying at most size bytes into buffer + offset
@@ -134,7 +204,30 @@ namespace heatshrink {
 		/// <param name="size">Number of bytes to be filled</param>
 		/// <param name="outputSize">Number of bytes actually polled</param>
 		/// <returns>Refer to HSE_poll_res in original C version heatshrink</returns>
-		DecoderPollResult Poll(array<Byte>^ buffer, UInt64 offset, UInt64 size, UInt64% outputSize);
+		DecoderPollResult Poll(array<Byte>^ buffer, UInt64 offset, UInt64 size, [Out] UInt64% outputSize);
+
+		/// <summary>
+		/// Poll for output from the decoder, copying at most size bytes into buffer
+		/// (setting outputSize to the actual amount copied)
+		/// </summary>
+		/// <param name="buffer">The buffer to be filled from the decoder</param>
+		/// <param name="size">Number of bytes to be filled</param>
+		/// <param name="outputSize">Number of bytes actually polled</param>
+		/// <returns>Refer to HSE_poll_res in original C version heatshrink</returns>
+		DecoderPollResult Poll(array<Byte>^ buffer, UInt64 size, [Out] UInt64% outputSize) {
+			return Poll(buffer, 0, size, outputSize);
+		}
+
+		/// <summary>
+		/// Poll for output from the decoder, copying up to buffer's length bytes into buffer
+		/// (setting outputSize to the actual amount copied)
+		/// </summary>
+		/// <param name="buffer">The buffer to be filled from the decoder</param>
+		/// <param name="outputSize">Number of bytes actually polled</param>
+		/// <returns>Refer to HSE_poll_res in original C version heatshrink</returns>
+		DecoderPollResult Poll(array<Byte>^ buffer, [Out] UInt64% outputSize) {
+			return Poll(buffer, 0, buffer->Length, outputSize);
+		}
 
 		/// <summary>
 		/// Notify the decoder that the input stream is finished.
