@@ -49,8 +49,12 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HeatShrinkUnitTest.cs" />
+    <Compile Include="DecoderUnitTest.cs" />
+    <Compile Include="EncoderUnitTest.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="IntegrationUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegressionUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
