@@ -141,8 +141,8 @@
     <ClCompile Include="..\heatshrink-c\heatshrink_decoder.cpp" />
     <ClCompile Include="..\heatshrink-c\heatshrink_encoder.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
-    <ClCompile Include="decoder.cpp" />
-    <ClCompile Include="encoder.cpp" />
+    <ClCompile Include="decoder_wrapper.cpp" />
+    <ClCompile Include="encoder_wrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />
